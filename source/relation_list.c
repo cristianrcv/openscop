@@ -1,64 +1,64 @@
 
-    /*+-----------------------------------------------------------------**
-     **                       OpenScop Library                          **
-     **-----------------------------------------------------------------**
-     **                        relation_list.c                          **
-     **-----------------------------------------------------------------**
-     **                   First version: 08/10/2010                     **
-     **-----------------------------------------------------------------**
+/*+-----------------------------------------------------------------**
+ **                       OpenScop Library                          **
+ **-----------------------------------------------------------------**
+ **                        relation_list.c                          **
+ **-----------------------------------------------------------------**
+ **                   First version: 08/10/2010                     **
+ **-----------------------------------------------------------------**
 
- 
- *****************************************************************************
- * OpenScop: Structures and formats for polyhedral tools to talk together    *
- *****************************************************************************
- *    ,___,,_,__,,__,,__,,__,,_,__,,_,__,,__,,___,_,__,,_,__,                *
- *    /   / /  //  //  //  // /   / /  //  //   / /  // /  /|,_,             *
- *   /   / /  //  //  //  // /   / /  //  //   / /  // /  / / /\             *
- *  |~~~|~|~~~|~~~|~~~|~~~|~|~~~|~|~~~|~~~|~~~|~|~~~|~|~~~|/_/  \            *
- *  | G |C| P | = | L | P |=| = |C| = | = | = |=| = |=| C |\  \ /\           *
- *  | R |l| o | = | e | l |=| = |a| = | = | = |=| = |=| L | \# \ /\          *
- *  | A |a| l | = | t | u |=| = |n| = | = | = |=| = |=| o | |\# \  \         *
- *  | P |n| l | = | s | t |=| = |d| = | = | = | |   |=| o | | \# \  \        *
- *  | H | | y |   | e | o | | = |l|   |   | = | |   | | G | |  \  \  \       *
- *  | I | |   |   | e |   | |   | |   |   |   | |   | |   | |   \  \  \      *
- *  | T | |   |   |   |   | |   | |   |   |   | |   | |   | |    \  \  \     *
- *  | E | |   |   |   |   | |   | |   |   |   | |   | |   | |     \  \  \    *
- *  | * |*| * | * | * | * |*| * |*| * | * | * |*| * |*| * | /      \* \  \   *
- *  | O |p| e | n | S | c |o| p |-| L | i | b |r| a |r| y |/        \  \ /   *
- *  '---'-'---'---'---'---'-'---'-'---'---'---'-'---'-'---'          '--'    *
- *                                                                           *
- * Copyright (C) 2008 University Paris-Sud 11 and INRIA                      *
- *                                                                           *
- * (3-clause BSD license)                                                    *
- * Redistribution and use in source  and binary forms, with or without       *
- * modification, are permitted provided that the following conditions        *
- * are met:                                                                  *
- *                                                                           *
- * 1. Redistributions of source code must retain the above copyright notice, *
- *    this list of conditions and the following disclaimer.                  *
- * 2. Redistributions in binary form must reproduce the above copyright      *
- *    notice, this list of conditions and the following disclaimer in the    *
- *    documentation and/or other materials provided with the distribution.   *
- * 3. The name of the author may not be used to endorse or promote products  *
- *    derived from this software without specific prior written permission.  *
- *                                                                           *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR      *
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.   *
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,          *
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT  *
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, *
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  *
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.         *
- *                                                                           *
- * OpenScop Library, a library to manipulate OpenScop formats and data       *
- * structures. Written by:                                                   *
- * Cedric Bastoul     <Cedric.Bastoul@u-psud.fr> and                         *
- * Louis-Noel Pouchet <Louis-Noel.pouchet@inria.fr>                          *
- *                                                                           *
- *****************************************************************************/
+
+*****************************************************************************
+* OpenScop: Structures and formats for polyhedral tools to talk together    *
+*****************************************************************************
+*    ,___,,_,__,,__,,__,,__,,_,__,,_,__,,__,,___,_,__,,_,__,                *
+*    /   / /  //  //  //  // /   / /  //  //   / /  // /  /|,_,             *
+*   /   / /  //  //  //  // /   / /  //  //   / /  // /  / / /\             *
+*  |~~~|~|~~~|~~~|~~~|~~~|~|~~~|~|~~~|~~~|~~~|~|~~~|~|~~~|/_/  \            *
+*  | G |C| P | = | L | P |=| = |C| = | = | = |=| = |=| C |\  \ /\           *
+*  | R |l| o | = | e | l |=| = |a| = | = | = |=| = |=| L | \# \ /\          *
+*  | A |a| l | = | t | u |=| = |n| = | = | = |=| = |=| o | |\# \  \         *
+*  | P |n| l | = | s | t |=| = |d| = | = | = | |   |=| o | | \# \  \        *
+*  | H | | y |   | e | o | | = |l|   |   | = | |   | | G | |  \  \  \       *
+*  | I | |   |   | e |   | |   | |   |   |   | |   | |   | |   \  \  \      *
+*  | T | |   |   |   |   | |   | |   |   |   | |   | |   | |    \  \  \     *
+*  | E | |   |   |   |   | |   | |   |   |   | |   | |   | |     \  \  \    *
+*  | * |*| * | * | * | * |*| * |*| * | * | * |*| * |*| * | /      \* \  \   *
+*  | O |p| e | n | S | c |o| p |-| L | i | b |r| a |r| y |/        \  \ /   *
+*  '---'-'---'---'---'---'-'---'-'---'---'---'-'---'-'---'          '--'    *
+*                                                                           *
+* Copyright (C) 2008 University Paris-Sud 11 and INRIA                      *
+*                                                                           *
+* (3-clause BSD license)                                                    *
+* Redistribution and use in source  and binary forms, with or without       *
+* modification, are permitted provided that the following conditions        *
+* are met:                                                                  *
+*                                                                           *
+* 1. Redistributions of source code must retain the above copyright notice, *
+*    this list of conditions and the following disclaimer.                  *
+* 2. Redistributions in binary form must reproduce the above copyright      *
+*    notice, this list of conditions and the following disclaimer in the    *
+*    documentation and/or other materials provided with the distribution.   *
+* 3. The name of the author may not be used to endorse or promote products  *
+*    derived from this software without specific prior written permission.  *
+*                                                                           *
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR      *
+* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *
+* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.   *
+* IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,          *
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT  *
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, *
+* DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
+* THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  *
+* THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.         *
+*                                                                           *
+* OpenScop Library, a library to manipulate OpenScop formats and data       *
+* structures. Written by:                                                   *
+* Cedric Bastoul     <Cedric.Bastoul@u-psud.fr> and                         *
+* Louis-Noel Pouchet <Louis-Noel.pouchet@inria.fr>                          *
+*                                                                           *
+*****************************************************************************/
 
 
 #include <stdlib.h>
@@ -87,49 +87,48 @@
  * \param level  Number of spaces before printing, for each line.
  */
 void osl_relation_list_idump(FILE * file, osl_relation_list_p l, int level) {
-  int j, first = 1;
+    int j, first = 1;
 
-  // Go to the right level.
-  for (j = 0; j < level; j++)
-    fprintf(file,"|\t");
+    // Go to the right level.
+    for (j = 0; j < level; j++)
+        fprintf(file,"|\t");
 
-  if (l != NULL)
-    fprintf(file, "+-- osl_relation_list_t\n");
-  else
-    fprintf(file, "+-- NULL relation list\n");
-
-  while (l != NULL) {
-    if (!first) {
-      // Go to the right level.
-      for (j = 0; j < level; j++)
-        fprintf(file, "|\t");
-      fprintf(file, "|   osl_relation_list_t\n");
-    }
+    if (l != NULL)
+        fprintf(file, "+-- osl_relation_list_t\n");
     else
-      first = 0;
+        fprintf(file, "+-- NULL relation list\n");
 
-    // A blank line.
-    for (j = 0; j <= level+1; j++)
-      fprintf(file, "|\t");
-    fprintf(file, "\n");
+    while (l != NULL) {
+        if (!first) {
+            // Go to the right level.
+            for (j = 0; j < level; j++)
+                fprintf(file, "|\t");
+            fprintf(file, "|   osl_relation_list_t\n");
+        } else
+            first = 0;
 
-    // Print a relation.
-    osl_relation_idump(file, l->elt, level+1);
+        // A blank line.
+        for (j = 0; j <= level+1; j++)
+            fprintf(file, "|\t");
+        fprintf(file, "\n");
 
-    l = l->next;
+        // Print a relation.
+        osl_relation_idump(file, l->elt, level+1);
 
-    // Next line.
-    if (l != NULL) {
-      for (j = 0; j <= level; j++)
-        fprintf(file, "|\t");
-      fprintf(file, "V\n");
+        l = l->next;
+
+        // Next line.
+        if (l != NULL) {
+            for (j = 0; j <= level; j++)
+                fprintf(file, "|\t");
+            fprintf(file, "V\n");
+        }
     }
-  }
 
-  // The last line.
-  for (j = 0; j <= level; j++)
-    fprintf(file, "|\t");
-  fprintf(file, "\n");
+    // The last line.
+    for (j = 0; j <= level; j++)
+        fprintf(file, "|\t");
+    fprintf(file, "\n");
 }
 
 
@@ -141,7 +140,7 @@ void osl_relation_list_idump(FILE * file, osl_relation_list_p l, int level) {
  * \param list The relation whose information has to be printed.
  */
 void osl_relation_list_dump(FILE * file, osl_relation_list_p list) {
-  osl_relation_list_idump(file, list, 0);
+    osl_relation_list_idump(file, list, 0);
 }
 
 
@@ -153,32 +152,31 @@ void osl_relation_list_dump(FILE * file, osl_relation_list_p list) {
  * list only if it is not NULL.
  * \param file  File where informations are printed.
  * \param list  The relation list whose information has to be printed.
- * \param[in] names Array of constraint columns names. 
+ * \param[in] names Array of constraint columns names.
  */
 void osl_relation_list_pprint_elts(FILE * file, osl_relation_list_p list,
                                    osl_names_p names) {
-  size_t i;
-  osl_relation_list_p head = list;
+    size_t i;
+    osl_relation_list_p head = list;
 
-  // Count the number of elements in the list with non-NULL content.
-  i = osl_relation_list_count(list);
-  
-  // Print each element of the relation list.
-  if (i > 0) {
-    i = 0;
-    while (head) {
-      if (head->elt != NULL) {
-        osl_relation_pprint(file, head->elt, names);
-        if (head->next != NULL)
-          fprintf(file, "\n");
-        i++;
-      }
-      head = head->next;
+    // Count the number of elements in the list with non-NULL content.
+    i = osl_relation_list_count(list);
+
+    // Print each element of the relation list.
+    if (i > 0) {
+        i = 0;
+        while (head) {
+            if (head->elt != NULL) {
+                osl_relation_pprint(file, head->elt, names);
+                if (head->next != NULL)
+                    fprintf(file, "\n");
+                i++;
+            }
+            head = head->next;
+        }
+    } else {
+        fprintf(file, "# NULL relation list\n");
     }
-  }
-  else {
-    fprintf(file, "# NULL relation list\n");
-  }
 }
 
 
@@ -190,97 +188,96 @@ void osl_relation_list_pprint_elts(FILE * file, osl_relation_list_p list,
  * list only if it is not NULL.
  * \param file  File where informations are printed.
  * \param list  The relation list whose information has to be printed.
- * \param[in] names Array of constraint columns names. 
+ * \param[in] names Array of constraint columns names.
  * \param[in] add_fakeiter True of False
  */
 void osl_relation_list_pprint_access_array_scoplib(FILE * file,
-              osl_relation_list_p list, osl_names_p names, int add_fakeiter) {
-  size_t i;
-  int nb_rows_read = 0, nb_columns_read = 0;
-  int nb_rows_write = 0, nb_columns_write = 0;
-  int nb_rows_may_write = 0, nb_columns_may_write = 0;
-  osl_relation_list_p head ;
+        osl_relation_list_p list, osl_names_p names, int add_fakeiter) {
+    size_t i;
+    int nb_rows_read = 0, nb_columns_read = 0;
+    int nb_rows_write = 0, nb_columns_write = 0;
+    int nb_rows_may_write = 0, nb_columns_may_write = 0;
+    osl_relation_list_p head ;
 
-  // Count the number of elements in the list with non-NULL content.
-  i = osl_relation_list_count(list);
-  
-  // Print each element of the relation list.
-  if (i > 0) {
-  
-    // Read/Write arrays size
-    head = list;
-    while (head) {
-      if (head->elt != NULL) {
-        if (head->elt->type == OSL_TYPE_READ) {
-          if (head->elt->nb_rows == 1)
-            nb_rows_read++;
-          else
-            nb_rows_read += head->elt->nb_rows - 1; // remove the 'Arr'
-            
-          nb_columns_read = head->elt->nb_columns - head->elt->nb_output_dims;
-          
-        } else if (head->elt->type == OSL_TYPE_WRITE) {
-          if (head->elt->nb_rows == 1)
-            nb_rows_write++;
-          else
-            nb_rows_write += head->elt->nb_rows - 1; // remove the 'Arr'
-            
-          nb_columns_write = head->elt->nb_columns - head->elt->nb_output_dims;
-          
-        } else if (head->elt->type == OSL_TYPE_MAY_WRITE) {
-          if (head->elt->nb_rows == 1)
-            nb_rows_may_write++;
-          else
-            nb_rows_may_write += head->elt->nb_rows - 1; // remove the 'Arr'
-            
-          nb_columns_may_write = head->elt->nb_columns -
-                                 head->elt->nb_output_dims;
+    // Count the number of elements in the list with non-NULL content.
+    i = osl_relation_list_count(list);
+
+    // Print each element of the relation list.
+    if (i > 0) {
+
+        // Read/Write arrays size
+        head = list;
+        while (head) {
+            if (head->elt != NULL) {
+                if (head->elt->type == OSL_TYPE_READ) {
+                    if (head->elt->nb_rows == 1)
+                        nb_rows_read++;
+                    else
+                        nb_rows_read += head->elt->nb_rows - 1; // remove the 'Arr'
+
+                    nb_columns_read = head->elt->nb_columns - head->elt->nb_output_dims;
+
+                } else if (head->elt->type == OSL_TYPE_WRITE) {
+                    if (head->elt->nb_rows == 1)
+                        nb_rows_write++;
+                    else
+                        nb_rows_write += head->elt->nb_rows - 1; // remove the 'Arr'
+
+                    nb_columns_write = head->elt->nb_columns - head->elt->nb_output_dims;
+
+                } else if (head->elt->type == OSL_TYPE_MAY_WRITE) {
+                    if (head->elt->nb_rows == 1)
+                        nb_rows_may_write++;
+                    else
+                        nb_rows_may_write += head->elt->nb_rows - 1; // remove the 'Arr'
+
+                    nb_columns_may_write = head->elt->nb_columns -
+                                           head->elt->nb_output_dims;
+                }
+            }
+            head = head->next;
         }
-      }
-      head = head->next;
-    }
-    
-    if (add_fakeiter) {
-      nb_columns_read++;
-      nb_columns_write++;
-      nb_columns_may_write++;
-    }
-    
-    fprintf(file, "# Read access informations\n%d %d\n",
-            nb_rows_read, nb_columns_read);
-    head = list;
-    while (head) {
-      if (head->elt != NULL && head->elt->type == OSL_TYPE_READ) {
-        osl_relation_pprint_scoplib(file, head->elt, names, 0, add_fakeiter);
-      }
-      head = head->next;
-    }
-    
-    fprintf(file, "# Write access informations\n%d %d\n",
-            nb_rows_write, nb_columns_write);
-    head = list;
-    while (head) {
-      if (head->elt != NULL && head->elt->type == OSL_TYPE_WRITE) {
-        osl_relation_pprint_scoplib(file, head->elt, names, 0, add_fakeiter);
-      }
-      head = head->next;
-    }
-    
-    if (nb_rows_may_write > 0) {
-      fprintf(file, "# May Write access informations\n%d %d\n",
-              nb_rows_may_write, nb_columns_may_write);
-      head = list;
-      while (head) {
-        if (head->elt != NULL && head->elt->type == OSL_TYPE_MAY_WRITE) {
-          osl_relation_pprint_scoplib(file, head->elt, names, 0, add_fakeiter);
+
+        if (add_fakeiter) {
+            nb_columns_read++;
+            nb_columns_write++;
+            nb_columns_may_write++;
         }
-        head = head->next;
-      }
+
+        fprintf(file, "# Read access informations\n%d %d\n",
+                nb_rows_read, nb_columns_read);
+        head = list;
+        while (head) {
+            if (head->elt != NULL && head->elt->type == OSL_TYPE_READ) {
+                osl_relation_pprint_scoplib(file, head->elt, names, 0, add_fakeiter);
+            }
+            head = head->next;
+        }
+
+        fprintf(file, "# Write access informations\n%d %d\n",
+                nb_rows_write, nb_columns_write);
+        head = list;
+        while (head) {
+            if (head->elt != NULL && head->elt->type == OSL_TYPE_WRITE) {
+                osl_relation_pprint_scoplib(file, head->elt, names, 0, add_fakeiter);
+            }
+            head = head->next;
+        }
+
+        if (nb_rows_may_write > 0) {
+            fprintf(file, "# May Write access informations\n%d %d\n",
+                    nb_rows_may_write, nb_columns_may_write);
+            head = list;
+            while (head) {
+                if (head->elt != NULL && head->elt->type == OSL_TYPE_MAY_WRITE) {
+                    osl_relation_pprint_scoplib(file, head->elt, names, 0, add_fakeiter);
+                }
+                head = head->next;
+            }
+        }
+    } else {
+        fprintf(file, "# NULL relation list\n");
     }
-  }
-  else {
-    fprintf(file, "# NULL relation list\n");
-  }
 }
 
 
@@ -291,23 +288,23 @@ void osl_relation_list_pprint_access_array_scoplib(FILE * file,
  * an element of the list only if it is not NULL.
  * \param[in] file  File where informations are printed.
  * \param[in] list  The relation list whose information has to be printed.
- * \param[in] names Array of constraint columns names. 
+ * \param[in] names Array of constraint columns names.
  */
 void osl_relation_list_pprint(FILE * file, osl_relation_list_p list,
                               osl_names_p names) {
-  size_t i;
+    size_t i;
 
-  // Count the number of elements in the list with non-NULL content.
-  i = osl_relation_list_count(list);
-  
-  // Print it.
-  if (i > 1)
-    fprintf(file,"# List of %lu elements\n%lu\n", i, i);
-  else
-    fprintf(file,"# List of %lu element \n%lu\n", i, i);
+    // Count the number of elements in the list with non-NULL content.
+    i = osl_relation_list_count(list);
 
-  // Print each element of the relation list.
-  osl_relation_list_pprint_elts(file, list, names);
+    // Print it.
+    if (i > 1)
+        fprintf(file,"# List of %lu elements\n%lu\n", i, i);
+    else
+        fprintf(file,"# List of %lu element \n%lu\n", i, i);
+
+    // Print each element of the relation list.
+    osl_relation_list_pprint_elts(file, list, names);
 }
 
 
@@ -321,7 +318,7 @@ void osl_relation_list_pprint(FILE * file, osl_relation_list_p list,
  */
 void osl_relation_list_print(FILE * file, osl_relation_list_p list) {
 
-  osl_relation_list_pprint(file, list, NULL);
+    osl_relation_list_pprint(file, list, NULL);
 }
 
 /*****************************************************************************
@@ -338,27 +335,27 @@ void osl_relation_list_print(FILE * file, osl_relation_list_p list) {
  * \return A pointer to the relation list structure that has been read.
  */
 osl_relation_list_p osl_relation_list_pread(FILE * file, int precision) {
-  int i;
-  osl_relation_list_p list;
-  osl_relation_list_p res;
-  int nb_mat;
+    int i;
+    osl_relation_list_p list;
+    osl_relation_list_p res;
+    int nb_mat;
 
-  // Read the number of relations to read.
-  nb_mat = osl_util_read_int(file, NULL); 
+    // Read the number of relations to read.
+    nb_mat = osl_util_read_int(file, NULL);
 
-  if (nb_mat < 0)
-    OSL_error("negative number of relations");
+    if (nb_mat < 0)
+        OSL_error("negative number of relations");
 
-  // Allocate the header of the list and start reading each element.
-  res = list = osl_relation_list_malloc();
-  for (i = 0; i < nb_mat; ++i) {
-    list->elt = osl_relation_pread(file, precision);
-    if (i < nb_mat - 1)
-      list->next = osl_relation_list_malloc();
-    list = list->next;
-  }
+    // Allocate the header of the list and start reading each element.
+    res = list = osl_relation_list_malloc();
+    for (i = 0; i < nb_mat; ++i) {
+        list->elt = osl_relation_pread(file, precision);
+        if (i < nb_mat - 1)
+            list->next = osl_relation_list_malloc();
+        list = list->next;
+    }
 
-  return res;
+    return res;
 }
 
 
@@ -370,8 +367,8 @@ osl_relation_list_p osl_relation_list_pread(FILE * file, int precision) {
  * \see{osl_relation_list_pread}
  */
 osl_relation_list_p osl_relation_list_read(FILE * foo) {
-  int precision = osl_util_get_precision();
-  return osl_relation_list_pread(foo, precision);
+    int precision = osl_util_get_precision();
+    return osl_relation_list_pread(foo, precision);
 }
 
 
@@ -389,13 +386,13 @@ osl_relation_list_p osl_relation_list_read(FILE * foo) {
  *         values.
  */
 osl_relation_list_p osl_relation_list_malloc(void) {
-  osl_relation_list_p res;
-  
-  OSL_malloc(res, osl_relation_list_p, sizeof(osl_relation_list_t));
-  res->elt  = NULL;
-  res->next = NULL;
+    osl_relation_list_p res;
 
-  return res;
+    OSL_malloc(res, osl_relation_list_p, sizeof(osl_relation_list_t));
+    res->elt  = NULL;
+    res->next = NULL;
+
+    return res;
 }
 
 
@@ -407,18 +404,18 @@ osl_relation_list_p osl_relation_list_malloc(void) {
  * \param list The pointer to the relation list we want to free.
  */
 void osl_relation_list_free(osl_relation_list_p list) {
-  osl_relation_list_p tmp;
+    osl_relation_list_p tmp;
 
-  if (list == NULL)
-    return;
+    if (list == NULL)
+        return;
 
-  while (list != NULL) {
-    if (list->elt != NULL)
-      osl_relation_free(list->elt);
-    tmp = list->next;
-    free(list);
-    list = tmp;
-  }
+    while (list != NULL) {
+        if (list->elt != NULL)
+            osl_relation_free(list->elt);
+        tmp = list->next;
+        free(list);
+        list = tmp;
+    }
 }
 
 
@@ -436,13 +433,13 @@ void osl_relation_list_free(osl_relation_list_p list) {
  * \return A pointer to a relation list node containing a copy of "relation".
  */
 osl_relation_list_p osl_relation_list_node(osl_relation_p r) {
-  osl_relation_list_p new = NULL;
-  
-  if (r != NULL) {
-    new = osl_relation_list_malloc();
-    new->elt = osl_relation_clone(r);
-  }
-  return new;
+    osl_relation_list_p new = NULL;
+
+    if (r != NULL) {
+        new = osl_relation_list_malloc();
+        new->elt = osl_relation_clone(r);
+    }
+    return new;
 }
 
 
@@ -454,28 +451,27 @@ osl_relation_list_p osl_relation_list_node(osl_relation_p r) {
  * \return A pointer to the full copy of the relation list in parameter.
  */
 osl_relation_list_p osl_relation_list_clone(osl_relation_list_p list) {
-  
-  osl_relation_list_p clone = NULL, node, previous = NULL; 
-  int first = 1;
 
-  while (list != NULL) {
-    node      = osl_relation_list_malloc();
-    node->elt = osl_relation_clone(list->elt);
+    osl_relation_list_p clone = NULL, node, previous = NULL;
+    int first = 1;
 
-    if (first) {
-      first = 0;
-      clone = node;
-      previous = node;
+    while (list != NULL) {
+        node      = osl_relation_list_malloc();
+        node->elt = osl_relation_clone(list->elt);
+
+        if (first) {
+            first = 0;
+            clone = node;
+            previous = node;
+        } else {
+            previous->next = node;
+            previous = previous->next;
+        }
+
+        list = list->next;
     }
-    else {
-      previous->next = node;
-      previous = previous->next;
-    }
 
-    list = list->next;
-  }
-
-  return clone;
+    return clone;
 }
 
 
@@ -489,22 +485,22 @@ osl_relation_list_p osl_relation_list_clone(osl_relation_list_p list) {
  *         l1 and l2.
  */
 osl_relation_list_p osl_relation_list_concat(osl_relation_list_p l1,
-                                             osl_relation_list_p l2) {
-  osl_relation_list_p new, end;
+        osl_relation_list_p l2) {
+    osl_relation_list_p new, end;
 
-  if (l1 == NULL)
-    return osl_relation_list_clone(l2);
+    if (l1 == NULL)
+        return osl_relation_list_clone(l2);
 
-  if (l2 == NULL)
-    return osl_relation_list_clone(l1);
+    if (l2 == NULL)
+        return osl_relation_list_clone(l1);
 
-  new = osl_relation_list_clone(l1);
-  end = new;
-  while (end->next != NULL)
-    end = end->next;
-  end->next = osl_relation_list_clone(l2);
+    new = osl_relation_list_clone(l1);
+    end = new;
+    while (end->next != NULL)
+        end = end->next;
+    end->next = osl_relation_list_clone(l2);
 
-  return new;
+    return new;
 }
 
 
@@ -518,10 +514,10 @@ osl_relation_list_p osl_relation_list_concat(osl_relation_list_p l1,
  * \param[in]     l2  The second relation list.
  */
 void osl_relation_list_add(osl_relation_list_p *l1, osl_relation_list_p l2) {
-  while (*l1 != NULL)
-    l1 = &((*l1)->next);
+    while (*l1 != NULL)
+        l1 = &((*l1)->next);
 
-  *l1 = l2;
+    *l1 = l2;
 }
 
 
@@ -535,10 +531,10 @@ void osl_relation_list_add(osl_relation_list_p *l1, osl_relation_list_p l2) {
  */
 void osl_relation_list_push(osl_relation_list_p *head,
                             osl_relation_list_p node) {
-  if (node != NULL) {
-    node->next = *head;
-    *head = node;
-  }
+    if (node != NULL) {
+        node->next = *head;
+        *head = node;
+    }
 }
 
 
@@ -552,15 +548,15 @@ void osl_relation_list_push(osl_relation_list_p *head,
  * \return The top element of the stack (detached from the list).
  */
 osl_relation_list_p osl_relation_list_pop(osl_relation_list_p *head) {
-  osl_relation_list_p top = NULL;
-  
-  if (*head != NULL) {
-    top = *head;
-    *head = (*head)->next;
-    top->next = NULL;
-  }
+    osl_relation_list_p top = NULL;
 
-  return top;
+    if (*head != NULL) {
+        top = *head;
+        *head = (*head)->next;
+        top->next = NULL;
+    }
+
+    return top;
 }
 
 
@@ -573,9 +569,9 @@ osl_relation_list_p osl_relation_list_pop(osl_relation_list_p *head) {
  *                     updated to the new element after duplication.
  */
 void osl_relation_list_dup(osl_relation_list_p *head) {
-  osl_relation_list_p top = osl_relation_list_pop(head);
-  osl_relation_list_push(head, osl_relation_list_clone(top));
-  osl_relation_list_push(head, top);
+    osl_relation_list_p top = osl_relation_list_pop(head);
+    osl_relation_list_push(head, osl_relation_list_clone(top));
+    osl_relation_list_push(head, top);
 }
 
 
@@ -589,8 +585,8 @@ void osl_relation_list_dup(osl_relation_list_p *head) {
  *                     if there is none).
  */
 void osl_relation_list_drop(osl_relation_list_p *head) {
-  osl_relation_list_p top = osl_relation_list_pop(head);
-  osl_relation_list_free(top);
+    osl_relation_list_p top = osl_relation_list_pop(head);
+    osl_relation_list_free(top);
 }
 
 
@@ -603,9 +599,9 @@ void osl_relation_list_drop(osl_relation_list_p *head) {
  *                     Updated to NULL.
  */
 void osl_relation_list_destroy(osl_relation_list_p *head) {
-  
-  while (*head != NULL)
-    osl_relation_list_drop(head);
+
+    while (*head != NULL)
+        osl_relation_list_drop(head);
 }
 
 
@@ -618,21 +614,21 @@ void osl_relation_list_destroy(osl_relation_list_p *head) {
  * \return 1 if l1 and l2 are the same (content-wise), 0 otherwise.
  */
 int osl_relation_list_equal(osl_relation_list_p l1, osl_relation_list_p l2) {
-  while ((l1 != NULL) && (l2 != NULL)) {
-    if (l1 == l2)
-      return 1;
-    
-    if (!osl_relation_equal(l1->elt, l2->elt))
-      return 0;
+    while ((l1 != NULL) && (l2 != NULL)) {
+        if (l1 == l2)
+            return 1;
 
-    l1 = l1->next;
-    l2 = l2->next;
-  }
+        if (!osl_relation_equal(l1->elt, l2->elt))
+            return 0;
 
-  if (((l1 == NULL) && (l2 != NULL)) || ((l1 != NULL) && (l2 == NULL)))
-    return 0;
-  
-  return 1;
+        l1 = l1->next;
+        l2 = l2->next;
+    }
+
+    if (((l1 == NULL) && (l2 != NULL)) || ((l1 != NULL) && (l2 == NULL)))
+        return 0;
+
+    return 1;
 }
 
 
@@ -656,24 +652,24 @@ int osl_relation_list_integrity_check(osl_relation_list_p list,
                                       int expected_nb_output_dims,
                                       int expected_nb_input_dims,
                                       int expected_nb_parameters) {
-  while (list != NULL) {
-    // Check the access function.
-    if (!osl_relation_integrity_check(list->elt,
-                                      type,
-                                      expected_nb_output_dims,
-                                      expected_nb_input_dims,
-                                      expected_nb_parameters)) {
-      return 0;
+    while (list != NULL) {
+        // Check the access function.
+        if (!osl_relation_integrity_check(list->elt,
+                                          type,
+                                          expected_nb_output_dims,
+                                          expected_nb_input_dims,
+                                          expected_nb_parameters)) {
+            return 0;
+        }
+
+        list = list->next;
     }
 
-    list = list->next;
-  }
-
-  return 1;
+    return 1;
 }
 
 
-/** 
+/**
  * osl_relation_list_set_type function:
  * this function sets the type of each relation in the relation list to the
  * one provided as parameter.
@@ -682,16 +678,16 @@ int osl_relation_list_integrity_check(osl_relation_list_p list,
  */
 void osl_relation_list_set_type(osl_relation_list_p list, int type) {
 
-  while (list != NULL) {
-    if (list->elt != NULL) {
-      list->elt->type = type;
+    while (list != NULL) {
+        if (list->elt != NULL) {
+            list->elt->type = type;
+        }
+        list = list->next;
     }
-    list = list->next;
-  }
 }
 
 
-/** 
+/**
  * osl_relation_list_filter function:
  * this function returns a copy of the input relation list, restricted to
  * the relations of a given type. The special type OSL_TYPE_ACCESS
@@ -701,39 +697,38 @@ void osl_relation_list_set_type(osl_relation_list_p list, int type) {
  * \return A copy of the input list with only relation of the given type.
  */
 osl_relation_list_p osl_relation_list_filter(osl_relation_list_p list,
-                                             int type) {
+        int type) {
 
-  osl_relation_list_p copy = osl_relation_list_clone(list);
-  osl_relation_list_p filtered = NULL;
-  osl_relation_list_p previous = NULL;
-  osl_relation_list_p trash;
-  int first = 1;
+    osl_relation_list_p copy = osl_relation_list_clone(list);
+    osl_relation_list_p filtered = NULL;
+    osl_relation_list_p previous = NULL;
+    osl_relation_list_p trash;
+    int first = 1;
 
-  while (copy != NULL) {
-    if ((copy->elt != NULL) &&
-        (((type == OSL_TYPE_ACCESS) &&
-          (osl_relation_is_access(copy->elt))) ||
-         ((type != OSL_TYPE_ACCESS) &&
-          (type == copy->elt->type)))) {
-      if (first) {
-        filtered = copy;
-        first = 0;
-      }
-      
-      previous = copy;
-      copy = copy->next;
+    while (copy != NULL) {
+        if ((copy->elt != NULL) &&
+                (((type == OSL_TYPE_ACCESS) &&
+                  (osl_relation_is_access(copy->elt))) ||
+                 ((type != OSL_TYPE_ACCESS) &&
+                  (type == copy->elt->type)))) {
+            if (first) {
+                filtered = copy;
+                first = 0;
+            }
+
+            previous = copy;
+            copy = copy->next;
+        } else {
+            trash = copy;
+            if (!first)
+                previous->next = copy->next;
+            copy = copy->next;
+            trash->next = NULL;
+            osl_relation_list_free(trash);
+        }
     }
-    else {
-      trash = copy;
-      if (!first)
-        previous->next = copy->next;
-      copy = copy->next;
-      trash->next = NULL;
-      osl_relation_list_free(trash);
-    }
-  }
 
-  return filtered;
+    return filtered;
 }
 
 
@@ -745,17 +740,17 @@ osl_relation_list_p osl_relation_list_filter(osl_relation_list_p list,
  * \return The number of nodes with non-NULL content in the relation list.
  */
 size_t osl_relation_list_count(osl_relation_list_p list) {
-  size_t i = 0;
-  
-  while (list != NULL) {
-    if (list->elt != NULL)
-      i++;
-    list = list->next;
-  }
+    size_t i = 0;
 
-  return i;
+    while (list != NULL) {
+        if (list->elt != NULL)
+            i++;
+        list = list->next;
+    }
+
+    return i;
 }
-  
+
 
 /**
  * osl_relation_list_get_attributes function:
@@ -781,26 +776,26 @@ void osl_relation_list_get_attributes(osl_relation_list_p list,
                                       int * nb_scattdims,
                                       int * nb_localdims,
                                       int * array_id) {
-  int local_nb_parameters = OSL_UNDEFINED;
-  int local_nb_iterators  = OSL_UNDEFINED;
-  int local_nb_scattdims  = OSL_UNDEFINED;
-  int local_nb_localdims  = OSL_UNDEFINED;
-  int local_array_id      = OSL_UNDEFINED;
+    int local_nb_parameters = OSL_UNDEFINED;
+    int local_nb_iterators  = OSL_UNDEFINED;
+    int local_nb_scattdims  = OSL_UNDEFINED;
+    int local_nb_localdims  = OSL_UNDEFINED;
+    int local_array_id      = OSL_UNDEFINED;
 
-  while (list != NULL) {
-    osl_relation_get_attributes(list->elt,
-                                &local_nb_parameters,
-                                &local_nb_iterators,
-                                &local_nb_scattdims,
-                                &local_nb_localdims,
-                                &local_array_id);
-    // Update.
-    *nb_parameters = OSL_max(*nb_parameters, local_nb_parameters);
-    *nb_iterators  = OSL_max(*nb_iterators,  local_nb_iterators);
-    *nb_scattdims  = OSL_max(*nb_scattdims,  local_nb_scattdims);
-    *nb_localdims  = OSL_max(*nb_localdims,  local_nb_localdims);
-    *array_id      = OSL_max(*array_id,      local_array_id);
-    list = list->next;
-  }
+    while (list != NULL) {
+        osl_relation_get_attributes(list->elt,
+                                    &local_nb_parameters,
+                                    &local_nb_iterators,
+                                    &local_nb_scattdims,
+                                    &local_nb_localdims,
+                                    &local_array_id);
+        // Update.
+        *nb_parameters = OSL_max(*nb_parameters, local_nb_parameters);
+        *nb_iterators  = OSL_max(*nb_iterators,  local_nb_iterators);
+        *nb_scattdims  = OSL_max(*nb_scattdims,  local_nb_scattdims);
+        *nb_localdims  = OSL_max(*nb_localdims,  local_nb_localdims);
+        *array_id      = OSL_max(*array_id,      local_array_id);
+        list = list->next;
+    }
 }
 

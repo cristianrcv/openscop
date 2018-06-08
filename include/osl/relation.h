@@ -1,64 +1,64 @@
 
-    /*+-----------------------------------------------------------------**
-     **                       OpenScop Library                          **
-     **-----------------------------------------------------------------**
-     **                          relation.h                             **
-     **-----------------------------------------------------------------**
-     **                   First version: 30/04/2008                     **
-     **-----------------------------------------------------------------**
+/*+-----------------------------------------------------------------**
+ **                       OpenScop Library                          **
+ **-----------------------------------------------------------------**
+ **                          relation.h                             **
+ **-----------------------------------------------------------------**
+ **                   First version: 30/04/2008                     **
+ **-----------------------------------------------------------------**
 
- 
- *****************************************************************************
- * OpenScop: Structures and formats for polyhedral tools to talk together    *
- *****************************************************************************
- *    ,___,,_,__,,__,,__,,__,,_,__,,_,__,,__,,___,_,__,,_,__,                *
- *    /   / /  //  //  //  // /   / /  //  //   / /  // /  /|,_,             *
- *   /   / /  //  //  //  // /   / /  //  //   / /  // /  / / /\             *
- *  |~~~|~|~~~|~~~|~~~|~~~|~|~~~|~|~~~|~~~|~~~|~|~~~|~|~~~|/_/  \            *
- *  | G |C| P | = | L | P |=| = |C| = | = | = |=| = |=| C |\  \ /\           *
- *  | R |l| o | = | e | l |=| = |a| = | = | = |=| = |=| L | \# \ /\          *
- *  | A |a| l | = | t | u |=| = |n| = | = | = |=| = |=| o | |\# \  \         *
- *  | P |n| l | = | s | t |=| = |d| = | = | = | |   |=| o | | \# \  \        *
- *  | H | | y |   | e | o | | = |l|   |   | = | |   | | G | |  \  \  \       *
- *  | I | |   |   | e |   | |   | |   |   |   | |   | |   | |   \  \  \      *
- *  | T | |   |   |   |   | |   | |   |   |   | |   | |   | |    \  \  \     *
- *  | E | |   |   |   |   | |   | |   |   |   | |   | |   | |     \  \  \    *
- *  | * |*| * | * | * | * |*| * |*| * | * | * |*| * |*| * | /      \* \  \   *
- *  | O |p| e | n | S | c |o| p |-| L | i | b |r| a |r| y |/        \  \ /   *
- *  '---'-'---'---'---'---'-'---'-'---'---'---'-'---'-'---'          '--'    *
- *                                                                           *
- * Copyright (C) 2008 University Paris-Sud 11 and INRIA                      *
- *                                                                           *
- * (3-clause BSD license)                                                    *
- * Redistribution and use in source  and binary forms, with or without       *
- * modification, are permitted provided that the following conditions        *
- * are met:                                                                  *
- *                                                                           *
- * 1. Redistributions of source code must retain the above copyright notice, *
- *    this list of conditions and the following disclaimer.                  *
- * 2. Redistributions in binary form must reproduce the above copyright      *
- *    notice, this list of conditions and the following disclaimer in the    *
- *    documentation and/or other materials provided with the distribution.   *
- * 3. The name of the author may not be used to endorse or promote products  *
- *    derived from this software without specific prior written permission.  *
- *                                                                           *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR      *
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.   *
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,          *
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT  *
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, *
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  *
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.         *
- *                                                                           *
- * OpenScop Library, a library to manipulate OpenScop formats and data       *
- * structures. Written by:                                                   *
- * Cedric Bastoul     <Cedric.Bastoul@u-psud.fr> and                         *
- * Louis-Noel Pouchet <Louis-Noel.pouchet@inria.fr>                          *
- *                                                                           *
- *****************************************************************************/
+
+*****************************************************************************
+* OpenScop: Structures and formats for polyhedral tools to talk together    *
+*****************************************************************************
+*    ,___,,_,__,,__,,__,,__,,_,__,,_,__,,__,,___,_,__,,_,__,                *
+*    /   / /  //  //  //  // /   / /  //  //   / /  // /  /|,_,             *
+*   /   / /  //  //  //  // /   / /  //  //   / /  // /  / / /\             *
+*  |~~~|~|~~~|~~~|~~~|~~~|~|~~~|~|~~~|~~~|~~~|~|~~~|~|~~~|/_/  \            *
+*  | G |C| P | = | L | P |=| = |C| = | = | = |=| = |=| C |\  \ /\           *
+*  | R |l| o | = | e | l |=| = |a| = | = | = |=| = |=| L | \# \ /\          *
+*  | A |a| l | = | t | u |=| = |n| = | = | = |=| = |=| o | |\# \  \         *
+*  | P |n| l | = | s | t |=| = |d| = | = | = | |   |=| o | | \# \  \        *
+*  | H | | y |   | e | o | | = |l|   |   | = | |   | | G | |  \  \  \       *
+*  | I | |   |   | e |   | |   | |   |   |   | |   | |   | |   \  \  \      *
+*  | T | |   |   |   |   | |   | |   |   |   | |   | |   | |    \  \  \     *
+*  | E | |   |   |   |   | |   | |   |   |   | |   | |   | |     \  \  \    *
+*  | * |*| * | * | * | * |*| * |*| * | * | * |*| * |*| * | /      \* \  \   *
+*  | O |p| e | n | S | c |o| p |-| L | i | b |r| a |r| y |/        \  \ /   *
+*  '---'-'---'---'---'---'-'---'-'---'---'---'-'---'-'---'          '--'    *
+*                                                                           *
+* Copyright (C) 2008 University Paris-Sud 11 and INRIA                      *
+*                                                                           *
+* (3-clause BSD license)                                                    *
+* Redistribution and use in source  and binary forms, with or without       *
+* modification, are permitted provided that the following conditions        *
+* are met:                                                                  *
+*                                                                           *
+* 1. Redistributions of source code must retain the above copyright notice, *
+*    this list of conditions and the following disclaimer.                  *
+* 2. Redistributions in binary form must reproduce the above copyright      *
+*    notice, this list of conditions and the following disclaimer in the    *
+*    documentation and/or other materials provided with the distribution.   *
+* 3. The name of the author may not be used to endorse or promote products  *
+*    derived from this software without specific prior written permission.  *
+*                                                                           *
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR      *
+* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *
+* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.   *
+* IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,          *
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT  *
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, *
+* DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
+* THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  *
+* THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.         *
+*                                                                           *
+* OpenScop Library, a library to manipulate OpenScop formats and data       *
+* structures. Written by:                                                   *
+* Cedric Bastoul     <Cedric.Bastoul@u-psud.fr> and                         *
+* Louis-Noel Pouchet <Louis-Noel.pouchet@inria.fr>                          *
+*                                                                           *
+*****************************************************************************/
 
 
 #ifndef OSL_RELATION_H
@@ -71,7 +71,7 @@
 
 # if defined(__cplusplus)
 extern "C"
-  {
+{
 # endif
 
 # define OSL_URI_RELATION "relation"
@@ -102,19 +102,19 @@ extern "C"
  * - An access relation : OSL_TYPE_ACCESS.
  */
 struct osl_relation {
-  int type;                   /**< Semantics about the relation */
-  int precision;              /**< Precision of relation matrix elements*/
-  int nb_rows;                /**< Number of rows */
-  int nb_columns;	      /**< Number of columns */
-  int nb_output_dims;         /**< Number of output dimensions */
-  int nb_input_dims;          /**< Number of input dimensions */
-  int nb_local_dims;          /**< Number of local (existentially
+    int type;                   /**< Semantics about the relation */
+    int precision;              /**< Precision of relation matrix elements*/
+    int nb_rows;                /**< Number of rows */
+    int nb_columns;	      /**< Number of columns */
+    int nb_output_dims;         /**< Number of output dimensions */
+    int nb_input_dims;          /**< Number of input dimensions */
+    int nb_local_dims;          /**< Number of local (existentially
                                    quantified) dimensions */
-  int nb_parameters;          /**< Number of parameters */
-  osl_int_t** m;              /**< An array of pointers to the beginning
+    int nb_parameters;          /**< Number of parameters */
+    osl_int_t** m;              /**< An array of pointers to the beginning
 			           of each row of the relation matrix */
-  void* usr;                  /**< User-managed field, untouched by osl */
-  struct osl_relation * next; /**< Pointer to the next relation in the
+    void* usr;                  /**< User-managed field, untouched by osl */
+    struct osl_relation * next; /**< Pointer to the next relation in the
                                    union of relations (NULL if none) */
 };
 typedef struct osl_relation   osl_relation_t;
@@ -136,11 +136,11 @@ void           osl_relation_print(FILE *, osl_relation_p);
 
 // SCoPLib Compatibility
 char *         osl_relation_spprint_polylib_scoplib(osl_relation_p,
-                                                    osl_names_p, int, int);
+        osl_names_p, int, int);
 char *         osl_relation_spprint_scoplib(osl_relation_p, osl_names_p,
-                                            int, int);
+        int, int);
 void           osl_relation_pprint_scoplib(FILE *, osl_relation_p,
-                                           osl_names_p, int, int);
+        osl_names_p, int, int);
 
 /*****************************************************************************
  *                               Reading function                            *
@@ -181,31 +181,31 @@ void            osl_relation_add_vector(osl_relation_p, osl_vector_p, int);
 void            osl_relation_sub_vector(osl_relation_p, osl_vector_p, int);
 osl_relation_p  osl_relation_from_vector(osl_vector_p);
 void            osl_relation_replace_constraints(osl_relation_p,
-                                                 osl_relation_p, int);
+        osl_relation_p, int);
 void            osl_relation_insert_constraints(osl_relation_p,
-                                                osl_relation_p, int);
+        osl_relation_p, int);
 void            osl_relation_swap_constraints(osl_relation_p, int, int);
 void            osl_relation_remove_row(osl_relation_p, int);
 void            osl_relation_remove_column(osl_relation_p, int);
 void            osl_relation_insert_columns(osl_relation_p, osl_relation_p,int);
 osl_relation_p  osl_relation_concat_constraints(osl_relation_p, osl_relation_p);
-int             osl_relation_part_equal(osl_relation_p, osl_relation_p);    
-int             osl_relation_equal(osl_relation_p, osl_relation_p);    
+int             osl_relation_part_equal(osl_relation_p, osl_relation_p);
+int             osl_relation_equal(osl_relation_p, osl_relation_p);
 int             osl_relation_integrity_check(osl_relation_p, int, int, int,int);
 void            osl_relation_set_attributes_one(osl_relation_p,
-                                                int, int, int, int);
+        int, int, int, int);
 void            osl_relation_set_attributes(osl_relation_p, int, int, int, int);
 void            osl_relation_set_type(osl_relation_p, int);
 int             osl_relation_get_array_id(osl_relation_p);
 int             osl_relation_is_access(osl_relation_p);
 void            osl_relation_get_attributes(osl_relation_p,
-                                            int *, int *, int *, int *, int *);
+        int *, int *, int *, int *, int *);
 osl_relation_p  osl_relation_extend_output(osl_relation_p, int);
 osl_interface_p osl_relation_interface(void);
 void            osl_relation_set_precision(int const, osl_relation_p);
 void            osl_relation_set_same_precision(osl_relation_p, osl_relation_p);
 
 # if defined(__cplusplus)
-  }
+}
 # endif
 #endif /* define OSL_RELATION_H */

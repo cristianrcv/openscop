@@ -1,64 +1,64 @@
 
-    /*+-----------------------------------------------------------------**
-     **                       OpenScop Library                          **
-     **-----------------------------------------------------------------**
-     **                           vector.c                              **
-     **-----------------------------------------------------------------**
-     **                   First version: 30/04/2008                     **
-     **-----------------------------------------------------------------**
+/*+-----------------------------------------------------------------**
+ **                       OpenScop Library                          **
+ **-----------------------------------------------------------------**
+ **                           vector.c                              **
+ **-----------------------------------------------------------------**
+ **                   First version: 30/04/2008                     **
+ **-----------------------------------------------------------------**
 
- 
- *****************************************************************************
- * OpenScop: Structures and formats for polyhedral tools to talk together    *
- *****************************************************************************
- *    ,___,,_,__,,__,,__,,__,,_,__,,_,__,,__,,___,_,__,,_,__,                *
- *    /   / /  //  //  //  // /   / /  //  //   / /  // /  /|,_,             *
- *   /   / /  //  //  //  // /   / /  //  //   / /  // /  / / /\             *
- *  |~~~|~|~~~|~~~|~~~|~~~|~|~~~|~|~~~|~~~|~~~|~|~~~|~|~~~|/_/  \            *
- *  | G |C| P | = | L | P |=| = |C| = | = | = |=| = |=| C |\  \ /\           *
- *  | R |l| o | = | e | l |=| = |a| = | = | = |=| = |=| L | \# \ /\          *
- *  | A |a| l | = | t | u |=| = |n| = | = | = |=| = |=| o | |\# \  \         *
- *  | P |n| l | = | s | t |=| = |d| = | = | = | |   |=| o | | \# \  \        *
- *  | H | | y |   | e | o | | = |l|   |   | = | |   | | G | |  \  \  \       *
- *  | I | |   |   | e |   | |   | |   |   |   | |   | |   | |   \  \  \      *
- *  | T | |   |   |   |   | |   | |   |   |   | |   | |   | |    \  \  \     *
- *  | E | |   |   |   |   | |   | |   |   |   | |   | |   | |     \  \  \    *
- *  | * |*| * | * | * | * |*| * |*| * | * | * |*| * |*| * | /      \* \  \   *
- *  | O |p| e | n | S | c |o| p |-| L | i | b |r| a |r| y |/        \  \ /   *
- *  '---'-'---'---'---'---'-'---'-'---'---'---'-'---'-'---'          '--'    *
- *                                                                           *
- * Copyright (C) 2008 University Paris-Sud 11 and INRIA                      *
- *                                                                           *
- * (3-clause BSD license)                                                    *
- * Redistribution and use in source  and binary forms, with or without       *
- * modification, are permitted provided that the following conditions        *
- * are met:                                                                  *
- *                                                                           *
- * 1. Redistributions of source code must retain the above copyright notice, *
- *    this list of conditions and the following disclaimer.                  *
- * 2. Redistributions in binary form must reproduce the above copyright      *
- *    notice, this list of conditions and the following disclaimer in the    *
- *    documentation and/or other materials provided with the distribution.   *
- * 3. The name of the author may not be used to endorse or promote products  *
- *    derived from this software without specific prior written permission.  *
- *                                                                           *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR      *
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.   *
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,          *
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT  *
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, *
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  *
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.         *
- *                                                                           *
- * OpenScop Library, a library to manipulate OpenScop formats and data       *
- * structures. Written by:                                                   *
- * Cedric Bastoul     <Cedric.Bastoul@u-psud.fr> and                         *
- * Louis-Noel Pouchet <Louis-Noel.pouchet@inria.fr>                          *
- *                                                                           *
- *****************************************************************************/
+
+*****************************************************************************
+* OpenScop: Structures and formats for polyhedral tools to talk together    *
+*****************************************************************************
+*    ,___,,_,__,,__,,__,,__,,_,__,,_,__,,__,,___,_,__,,_,__,                *
+*    /   / /  //  //  //  // /   / /  //  //   / /  // /  /|,_,             *
+*   /   / /  //  //  //  // /   / /  //  //   / /  // /  / / /\             *
+*  |~~~|~|~~~|~~~|~~~|~~~|~|~~~|~|~~~|~~~|~~~|~|~~~|~|~~~|/_/  \            *
+*  | G |C| P | = | L | P |=| = |C| = | = | = |=| = |=| C |\  \ /\           *
+*  | R |l| o | = | e | l |=| = |a| = | = | = |=| = |=| L | \# \ /\          *
+*  | A |a| l | = | t | u |=| = |n| = | = | = |=| = |=| o | |\# \  \         *
+*  | P |n| l | = | s | t |=| = |d| = | = | = | |   |=| o | | \# \  \        *
+*  | H | | y |   | e | o | | = |l|   |   | = | |   | | G | |  \  \  \       *
+*  | I | |   |   | e |   | |   | |   |   |   | |   | |   | |   \  \  \      *
+*  | T | |   |   |   |   | |   | |   |   |   | |   | |   | |    \  \  \     *
+*  | E | |   |   |   |   | |   | |   |   |   | |   | |   | |     \  \  \    *
+*  | * |*| * | * | * | * |*| * |*| * | * | * |*| * |*| * | /      \* \  \   *
+*  | O |p| e | n | S | c |o| p |-| L | i | b |r| a |r| y |/        \  \ /   *
+*  '---'-'---'---'---'---'-'---'-'---'---'---'-'---'-'---'          '--'    *
+*                                                                           *
+* Copyright (C) 2008 University Paris-Sud 11 and INRIA                      *
+*                                                                           *
+* (3-clause BSD license)                                                    *
+* Redistribution and use in source  and binary forms, with or without       *
+* modification, are permitted provided that the following conditions        *
+* are met:                                                                  *
+*                                                                           *
+* 1. Redistributions of source code must retain the above copyright notice, *
+*    this list of conditions and the following disclaimer.                  *
+* 2. Redistributions in binary form must reproduce the above copyright      *
+*    notice, this list of conditions and the following disclaimer in the    *
+*    documentation and/or other materials provided with the distribution.   *
+* 3. The name of the author may not be used to endorse or promote products  *
+*    derived from this software without specific prior written permission.  *
+*                                                                           *
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR      *
+* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *
+* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.   *
+* IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,          *
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT  *
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, *
+* DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
+* THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  *
+* THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.         *
+*                                                                           *
+* OpenScop Library, a library to manipulate OpenScop formats and data       *
+* structures. Written by:                                                   *
+* Cedric Bastoul     <Cedric.Bastoul@u-psud.fr> and                         *
+* Louis-Noel Pouchet <Louis-Noel.pouchet@inria.fr>                          *
+*                                                                           *
+*****************************************************************************/
 
 
 #include <stdlib.h>
@@ -87,44 +87,43 @@
  * \param[in] level  Number of spaces before printing, for each line.
  */
 void osl_vector_idump(FILE * file, osl_vector_p vector, int level) {
-  int j;
+    int j;
 
-  if (vector != NULL) {
-    // Go to the right level.
-    for (j = 0; j < level; j++)
-      fprintf(file,"|\t");
-    fprintf(file,"+-- osl_vector_t (");
-    osl_int_dump_precision(file, vector->precision);
-    fprintf(file, ")\n");
+    if (vector != NULL) {
+        // Go to the right level.
+        for (j = 0; j < level; j++)
+            fprintf(file,"|\t");
+        fprintf(file,"+-- osl_vector_t (");
+        osl_int_dump_precision(file, vector->precision);
+        fprintf(file, ")\n");
 
-    for (j = 0; j <= level; j++)
-      fprintf(file,"|\t");
-    fprintf(file,"%d\n", vector->size);
+        for (j = 0; j <= level; j++)
+            fprintf(file,"|\t");
+        fprintf(file,"%d\n", vector->size);
 
-    // Display the vector.
-    for (j = 0; j <= level; j++)
-      fprintf(file, "|\t");
+        // Display the vector.
+        for (j = 0; j <= level; j++)
+            fprintf(file, "|\t");
 
-    fprintf(file, "[ ");
+        fprintf(file, "[ ");
 
-    for (j = 0; j < vector->size; j++) {
-      osl_int_print(file, vector->precision, vector->v[j]);
-      fprintf(file, " ");
+        for (j = 0; j < vector->size; j++) {
+            osl_int_print(file, vector->precision, vector->v[j]);
+            fprintf(file, " ");
+        }
+
+        fprintf(file, "]\n");
+    } else {
+        // Go to the right level.
+        for (j = 0; j < level; j++)
+            fprintf(file, "|\t");
+        fprintf(file, "+-- NULL vector\n");
     }
 
-    fprintf(file, "]\n");
-  }
-  else {
-    // Go to the right level.
-    for (j = 0; j < level; j++)
-      fprintf(file, "|\t");
-    fprintf(file, "+-- NULL vector\n");
-  }
-
-  // The last line.
-  for (j = 0; j <= level; j++)
-    fprintf(file, "|\t");
-  fprintf(file, "\n");
+    // The last line.
+    for (j = 0; j <= level; j++)
+        fprintf(file, "|\t");
+    fprintf(file, "\n");
 }
 
 
@@ -136,7 +135,7 @@ void osl_vector_idump(FILE * file, osl_vector_p vector, int level) {
  * \param[in] vector The vector whose information have to be printed.
  */
 void osl_vector_dump(FILE * file, osl_vector_p vector) {
-  osl_vector_idump(file, vector, 0);
+    osl_vector_idump(file, vector, 0);
 }
 
 
@@ -155,21 +154,20 @@ void osl_vector_dump(FILE * file, osl_vector_p vector) {
  * \return A pointer to the newly allocated osl_vector_t structure.
  */
 osl_vector_p osl_vector_pmalloc(int precision, int size) {
-  osl_vector_p vector;
-  int i;
+    osl_vector_p vector;
+    int i;
 
-  OSL_malloc(vector, osl_vector_p, sizeof(osl_vector_t));
-  vector->size = size;
-  vector->precision = precision;
-  if (size == 0) {
-    vector->v = NULL;
-  }
-  else {
-    OSL_malloc(vector->v, osl_int_t*, (size_t)size * sizeof(osl_int_t));
-    for (i = 0; i < size; i++)
-      osl_int_init_set_si(precision, &vector->v[i], 0);
-  }
-  return vector;
+    OSL_malloc(vector, osl_vector_p, sizeof(osl_vector_t));
+    vector->size = size;
+    vector->precision = precision;
+    if (size == 0) {
+        vector->v = NULL;
+    } else {
+        OSL_malloc(vector->v, osl_int_t*, (size_t)size * sizeof(osl_int_t));
+        for (i = 0; i < size; i++)
+            osl_int_init_set_si(precision, &vector->v[i], 0);
+    }
+    return vector;
 }
 
 
@@ -177,15 +175,15 @@ osl_vector_p osl_vector_pmalloc(int precision, int size) {
  * osl_vector_malloc function:
  * This function allocates the memory space for a osl_vector_t structure
  * and sets its fields with default values. Then it returns a pointer to the
- * allocated space. The precision of the vector elements corresponds to the 
+ * allocated space. The precision of the vector elements corresponds to the
  * precision environment variable or to the highest available precision if it
  * is not defined.
  * \param[in] size      The number of entries of the vector to allocate.
  * \return A pointer to the newly allocated osl_vector_t structure.
  */
 osl_vector_p osl_vector_malloc(int size) {
-  int precision = osl_util_get_precision();
-  return osl_vector_pmalloc(precision, size);
+    int precision = osl_util_get_precision();
+    return osl_vector_pmalloc(precision, size);
 }
 
 
@@ -195,17 +193,17 @@ osl_vector_p osl_vector_malloc(int size) {
  * \param[in] vector The pointer to the vector we want to free.
  */
 void osl_vector_free(osl_vector_p vector) {
-  int i;
+    int i;
 
-  if (vector != NULL) {
-    if (vector->v != NULL) {
-      for (i = 0; i < vector->size; i++)
-        osl_int_clear(vector->precision, &vector->v[i]);
+    if (vector != NULL) {
+        if (vector->v != NULL) {
+            for (i = 0; i < vector->size; i++)
+                osl_int_clear(vector->precision, &vector->v[i]);
 
-      free(vector->v);
+            free(vector->v);
+        }
+        free(vector);
     }
-    free(vector);
-  }
 }
 
 
@@ -224,21 +222,21 @@ void osl_vector_free(osl_vector_p vector) {
  * \return A pointer to a new vector, copy of the basis one plus the scalar.
  */
 osl_vector_p osl_vector_add_scalar(osl_vector_p vector, int scalar) {
-  int i, precision, last;
-  osl_vector_p result;
+    int i, precision, last;
+    osl_vector_p result;
 
-  if ((vector == NULL) || (vector->size < 2))
-    OSL_error("incompatible vector for addition");
+    if ((vector == NULL) || (vector->size < 2))
+        OSL_error("incompatible vector for addition");
 
-  precision = vector->precision;
-  last = vector->size - 1;
+    precision = vector->precision;
+    last = vector->size - 1;
 
-  result = osl_vector_pmalloc(precision, vector->size);
-  for (i = 0; i < vector->size; i++)
-    osl_int_assign(precision, &result->v[i], vector->v[i]);
-  osl_int_add_si(precision, &result->v[last], vector->v[last], scalar);
+    result = osl_vector_pmalloc(precision, vector->size);
+    for (i = 0; i < vector->size; i++)
+        osl_int_assign(precision, &result->v[i], vector->v[i]);
+    osl_int_add_si(precision, &result->v[last], vector->v[last], scalar);
 
-  return result;
+    return result;
 }
 
 
@@ -252,18 +250,18 @@ osl_vector_p osl_vector_add_scalar(osl_vector_p vector, int scalar) {
  * \return A pointer to a new vector, corresponding to v1 + v2.
  */
 osl_vector_p osl_vector_add(osl_vector_p v1, osl_vector_p v2) {
-  int i;
-  osl_vector_p v3;
+    int i;
+    osl_vector_p v3;
 
-  if ((v1 == NULL) || (v2 == NULL) ||
-      (v1->size != v2->size) || (v1->precision != v2->precision))
-    OSL_error("incompatible vectors for addition");
+    if ((v1 == NULL) || (v2 == NULL) ||
+            (v1->size != v2->size) || (v1->precision != v2->precision))
+        OSL_error("incompatible vectors for addition");
 
-  v3 = osl_vector_pmalloc(v1->precision, v1->size);
-  for (i = 0; i < v1->size; i++)
-    osl_int_add(v1->precision, &v3->v[i], v1->v[i], v2->v[i]);
+    v3 = osl_vector_pmalloc(v1->precision, v1->size);
+    for (i = 0; i < v1->size; i++)
+        osl_int_add(v1->precision, &v3->v[i], v1->v[i], v2->v[i]);
 
-  return v3;
+    return v3;
 }
 
 
@@ -277,18 +275,18 @@ osl_vector_p osl_vector_add(osl_vector_p v1, osl_vector_p v2) {
  * \return A pointer to a new vector, corresponding to v1 - v2.
  */
 osl_vector_p osl_vector_sub(osl_vector_p v1, osl_vector_p v2) {
-  int i;
-  osl_vector_p v3;
+    int i;
+    osl_vector_p v3;
 
-  if ((v1 == NULL) || (v2 == NULL) ||
-      (v1->size != v2->size) || (v1->precision != v2->precision))
-    OSL_error("incompatible vectors for subtraction");
+    if ((v1 == NULL) || (v2 == NULL) ||
+            (v1->size != v2->size) || (v1->precision != v2->precision))
+        OSL_error("incompatible vectors for subtraction");
 
-  v3 = osl_vector_pmalloc(v1->precision, v1->size);
-  for (i = 0; i < v1->size; i++)
-    osl_int_sub(v1->precision, &v3->v[i], v1->v[i], v2->v[i]);
+    v3 = osl_vector_pmalloc(v1->precision, v1->size);
+    for (i = 0; i < v1->size; i++)
+        osl_int_sub(v1->precision, &v3->v[i], v1->v[i], v2->v[i]);
 
-  return v3;
+    return v3;
 }
 
 
@@ -301,9 +299,9 @@ osl_vector_p osl_vector_sub(osl_vector_p v1, osl_vector_p v2) {
  * \param vector The vector to be tagged.
  */
 void osl_vector_tag_inequality(osl_vector_p vector) {
-  if ((vector == NULL) || (vector->size < 1))
-    OSL_error("vector cannot be tagged");
-  osl_int_set_si(vector->precision, &vector->v[0], 1);
+    if ((vector == NULL) || (vector->size < 1))
+        OSL_error("vector cannot be tagged");
+    osl_int_set_si(vector->precision, &vector->v[0], 1);
 }
 
 
@@ -316,9 +314,9 @@ void osl_vector_tag_inequality(osl_vector_p vector) {
  * \param vector The vector to be tagged.
  */
 void osl_vector_tag_equality(osl_vector_p vector) {
-  if ((vector == NULL) || (vector->size < 1))
-    OSL_error("vector cannot be tagged");
-  osl_int_set_si(vector->precision, &vector->v[0], 0);
+    if ((vector == NULL) || (vector->size < 1))
+        OSL_error("vector cannot be tagged");
+    osl_int_set_si(vector->precision, &vector->v[0], 0);
 }
 
 
@@ -331,19 +329,19 @@ void osl_vector_tag_equality(osl_vector_p vector) {
  * \return 1 if v1 and v2 are the same (content-wise), 0 otherwise.
  */
 int osl_vector_equal(osl_vector_p v1, osl_vector_p v2) {
-  int i;
+    int i;
 
-  if (v1 == v2)
+    if (v1 == v2)
+        return 1;
+
+    if ((v1->size != v2->size) || (v1->precision != v2->precision))
+        return 0;
+
+    for (i = 0; i < v1->size; i++)
+        if (osl_int_ne(v1->precision, v1->v[i], v2->v[i]))
+            return 0;
+
     return 1;
-
-  if ((v1->size != v2->size) || (v1->precision != v2->precision))
-    return 0;
-
-  for (i = 0; i < v1->size; i++)
-    if (osl_int_ne(v1->precision, v1->v[i], v2->v[i]))
-      return 0;
-
-  return 1;
 }
 
 
@@ -356,13 +354,13 @@ int osl_vector_equal(osl_vector_p v1, osl_vector_p v2) {
  * \return A new vector corresponding to scalar * v.
  */
 osl_vector_p osl_vector_mul_scalar(osl_vector_p v, int scalar) {
-  int i;
-  osl_vector_p result = osl_vector_pmalloc(v->precision, v->size);
-  
-  for (i = 0; i < v->size; i++)
-    osl_int_mul_si(v->precision, &result->v[i], v->v[i], scalar);
+    int i;
+    osl_vector_p result = osl_vector_pmalloc(v->precision, v->size);
 
-  return result;
+    for (i = 0; i < v->size; i++)
+        osl_int_mul_si(v->precision, &result->v[i], v->v[i], scalar);
+
+    return result;
 }
 
 
@@ -374,14 +372,14 @@ osl_vector_p osl_vector_mul_scalar(osl_vector_p v, int scalar) {
  * \return 1 if the vector is scalar, 0 otherwise.
  */
 int osl_vector_is_scalar(osl_vector_p vector) {
-  int i;
+    int i;
 
-  if (vector == NULL)
-    return 0;
+    if (vector == NULL)
+        return 0;
 
-  for (i = 0; i < vector->size - 1; i++)
-    if (!osl_int_zero(vector->precision, vector->v[i]))
-      return 0;
-  return 1;
+    for (i = 0; i < vector->size - 1; i++)
+        if (!osl_int_zero(vector->precision, vector->v[i]))
+            return 0;
+    return 1;
 }
 

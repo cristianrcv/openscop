@@ -1,64 +1,64 @@
 
-    /*+-----------------------------------------------------------------**
-     **                       OpenScop Library                          **
-     **-----------------------------------------------------------------**
-     **                    extensions/scatnames.c                       **
-     **-----------------------------------------------------------------**
-     **                   First version: 03/12/2011                     **
-     **-----------------------------------------------------------------**
+/*+-----------------------------------------------------------------**
+ **                       OpenScop Library                          **
+ **-----------------------------------------------------------------**
+ **                    extensions/scatnames.c                       **
+ **-----------------------------------------------------------------**
+ **                   First version: 03/12/2011                     **
+ **-----------------------------------------------------------------**
 
- 
- *****************************************************************************
- * OpenScop: Structures and formats for polyhedral tools to talk together    *
- *****************************************************************************
- *    ,___,,_,__,,__,,__,,__,,_,__,,_,__,,__,,___,_,__,,_,__,                *
- *    /   / /  //  //  //  // /   / /  //  //   / /  // /  /|,_,             *
- *   /   / /  //  //  //  // /   / /  //  //   / /  // /  / / /\             *
- *  |~~~|~|~~~|~~~|~~~|~~~|~|~~~|~|~~~|~~~|~~~|~|~~~|~|~~~|/_/  \            *
- *  | G |C| P | = | L | P |=| = |C| = | = | = |=| = |=| C |\  \ /\           *
- *  | R |l| o | = | e | l |=| = |a| = | = | = |=| = |=| L | \# \ /\          *
- *  | A |a| l | = | t | u |=| = |n| = | = | = |=| = |=| o | |\# \  \         *
- *  | P |n| l | = | s | t |=| = |d| = | = | = | |   |=| o | | \# \  \        *
- *  | H | | y |   | e | o | | = |l|   |   | = | |   | | G | |  \  \  \       *
- *  | I | |   |   | e |   | |   | |   |   |   | |   | |   | |   \  \  \      *
- *  | T | |   |   |   |   | |   | |   |   |   | |   | |   | |    \  \  \     *
- *  | E | |   |   |   |   | |   | |   |   |   | |   | |   | |     \  \  \    *
- *  | * |*| * | * | * | * |*| * |*| * | * | * |*| * |*| * | /      \* \  \   *
- *  | O |p| e | n | S | c |o| p |-| L | i | b |r| a |r| y |/        \  \ /   *
- *  '---'-'---'---'---'---'-'---'-'---'---'---'-'---'-'---'          '--'    *
- *                                                                           *
- * Copyright (C) 2008 University Paris-Sud 11 and INRIA                      *
- *                                                                           *
- * (3-clause BSD license)                                                    *
- * Redistribution and use in source  and binary forms, with or without       *
- * modification, are permitted provided that the following conditions        *
- * are met:                                                                  *
- *                                                                           *
- * 1. Redistributions of source code must retain the above copyright notice, *
- *    this list of conditions and the following disclaimer.                  *
- * 2. Redistributions in binary form must reproduce the above copyright      *
- *    notice, this list of conditions and the following disclaimer in the    *
- *    documentation and/or other materials provided with the distribution.   *
- * 3. The name of the author may not be used to endorse or promote products  *
- *    derived from this software without specific prior written permission.  *
- *                                                                           *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR      *
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.   *
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,          *
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT  *
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, *
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  *
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.         *
- *                                                                           *
- * OpenScop Library, a library to manipulate OpenScop formats and data       *
- * structures. Written by:                                                   *
- * Cedric Bastoul     <Cedric.Bastoul@u-psud.fr> and                         *
- * Louis-Noel Pouchet <Louis-Noel.pouchet@inria.fr>                          *
- *                                                                           *
- *****************************************************************************/
+
+*****************************************************************************
+* OpenScop: Structures and formats for polyhedral tools to talk together    *
+*****************************************************************************
+*    ,___,,_,__,,__,,__,,__,,_,__,,_,__,,__,,___,_,__,,_,__,                *
+*    /   / /  //  //  //  // /   / /  //  //   / /  // /  /|,_,             *
+*   /   / /  //  //  //  // /   / /  //  //   / /  // /  / / /\             *
+*  |~~~|~|~~~|~~~|~~~|~~~|~|~~~|~|~~~|~~~|~~~|~|~~~|~|~~~|/_/  \            *
+*  | G |C| P | = | L | P |=| = |C| = | = | = |=| = |=| C |\  \ /\           *
+*  | R |l| o | = | e | l |=| = |a| = | = | = |=| = |=| L | \# \ /\          *
+*  | A |a| l | = | t | u |=| = |n| = | = | = |=| = |=| o | |\# \  \         *
+*  | P |n| l | = | s | t |=| = |d| = | = | = | |   |=| o | | \# \  \        *
+*  | H | | y |   | e | o | | = |l|   |   | = | |   | | G | |  \  \  \       *
+*  | I | |   |   | e |   | |   | |   |   |   | |   | |   | |   \  \  \      *
+*  | T | |   |   |   |   | |   | |   |   |   | |   | |   | |    \  \  \     *
+*  | E | |   |   |   |   | |   | |   |   |   | |   | |   | |     \  \  \    *
+*  | * |*| * | * | * | * |*| * |*| * | * | * |*| * |*| * | /      \* \  \   *
+*  | O |p| e | n | S | c |o| p |-| L | i | b |r| a |r| y |/        \  \ /   *
+*  '---'-'---'---'---'---'-'---'-'---'---'---'-'---'-'---'          '--'    *
+*                                                                           *
+* Copyright (C) 2008 University Paris-Sud 11 and INRIA                      *
+*                                                                           *
+* (3-clause BSD license)                                                    *
+* Redistribution and use in source  and binary forms, with or without       *
+* modification, are permitted provided that the following conditions        *
+* are met:                                                                  *
+*                                                                           *
+* 1. Redistributions of source code must retain the above copyright notice, *
+*    this list of conditions and the following disclaimer.                  *
+* 2. Redistributions in binary form must reproduce the above copyright      *
+*    notice, this list of conditions and the following disclaimer in the    *
+*    documentation and/or other materials provided with the distribution.   *
+* 3. The name of the author may not be used to endorse or promote products  *
+*    derived from this software without specific prior written permission.  *
+*                                                                           *
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR      *
+* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES *
+* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.   *
+* IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,          *
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT  *
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, *
+* DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY     *
+* THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT       *
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  *
+* THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.         *
+*                                                                           *
+* OpenScop Library, a library to manipulate OpenScop formats and data       *
+* structures. Written by:                                                   *
+* Cedric Bastoul     <Cedric.Bastoul@u-psud.fr> and                         *
+* Louis-Noel Pouchet <Louis-Noel.pouchet@inria.fr>                          *
+*                                                                           *
+*****************************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -87,31 +87,31 @@
  * \param[in] level     Number of spaces before printing, for each line.
  */
 void osl_scatnames_idump(FILE * file, osl_scatnames_p scatnames, int level) {
-  int j;
+    int j;
 
-  // Go to the right level.
-  for (j = 0; j < level; j++)
-    fprintf(file, "|\t");
-
-  if (scatnames != NULL)
-    fprintf(file, "+-- osl_scatnames_t\n");
-  else
-    fprintf(file, "+-- NULL scatnames\n");
-
-  if (scatnames != NULL) {
     // Go to the right level.
-    for(j = 0; j <= level + 1; j++)
-      fprintf(file, "|\t");
-    fprintf(file, "\n");
-  
-    // Display the list of scattering names.
-    osl_strings_idump(file, scatnames->names, level + 1);
-  }
+    for (j = 0; j < level; j++)
+        fprintf(file, "|\t");
 
-  // The last line.
-  for (j = 0; j <= level; j++)
-    fprintf(file, "|\t");
-  fprintf(file, "\n");
+    if (scatnames != NULL)
+        fprintf(file, "+-- osl_scatnames_t\n");
+    else
+        fprintf(file, "+-- NULL scatnames\n");
+
+    if (scatnames != NULL) {
+        // Go to the right level.
+        for(j = 0; j <= level + 1; j++)
+            fprintf(file, "|\t");
+        fprintf(file, "\n");
+
+        // Display the list of scattering names.
+        osl_strings_idump(file, scatnames->names, level + 1);
+    }
+
+    // The last line.
+    for (j = 0; j <= level; j++)
+        fprintf(file, "|\t");
+    fprintf(file, "\n");
 }
 
 
@@ -123,7 +123,7 @@ void osl_scatnames_idump(FILE * file, osl_scatnames_p scatnames, int level) {
  * \param[in] scatnames The scatnames structure to print.
  */
 void osl_scatnames_dump(FILE * file, osl_scatnames_p scatnames) {
-  osl_scatnames_idump(file, scatnames, 0);
+    osl_scatnames_idump(file, scatnames, 0);
 }
 
 
@@ -135,7 +135,7 @@ void osl_scatnames_dump(FILE * file, osl_scatnames_p scatnames) {
  * \return A string containing the OpenScop dump of the scatnames structure.
  */
 char * osl_scatnames_sprint(osl_scatnames_p scatnames) {
-  return osl_strings_sprint(scatnames->names);
+    return osl_strings_sprint(scatnames->names);
 }
 
 
@@ -156,22 +156,22 @@ char * osl_scatnames_sprint(osl_scatnames_p scatnames) {
  * \return A pointer to the scatnames structure that has been read.
  */
 osl_scatnames_p osl_scatnames_sread(char ** input) {
-  osl_scatnames_p scatnames = NULL;
-  osl_strings_p names = NULL;
+    osl_scatnames_p scatnames = NULL;
+    osl_strings_p names = NULL;
 
-  if (*input == NULL) {
-    OSL_debug("no scatnames optional tag");
-    return NULL;
-  }
+    if (*input == NULL) {
+        OSL_debug("no scatnames optional tag");
+        return NULL;
+    }
 
-  // Build the scatnames structure
-  names = osl_strings_sread(input);
-  if (names != NULL) {
-    scatnames = osl_scatnames_malloc();
-    scatnames->names = names;
-  }
+    // Build the scatnames structure
+    names = osl_strings_sread(input);
+    if (names != NULL) {
+        scatnames = osl_scatnames_malloc();
+        scatnames->names = names;
+    }
 
-  return scatnames;
+    return scatnames;
 }
 
 
@@ -189,12 +189,12 @@ osl_scatnames_p osl_scatnames_sread(char ** input) {
  *         default values.
  */
 osl_scatnames_p osl_scatnames_malloc(void) {
-  osl_scatnames_p scatnames;
+    osl_scatnames_p scatnames;
 
-  OSL_malloc(scatnames, osl_scatnames_p, sizeof(osl_scatnames_t));
-  scatnames->names = NULL;
+    OSL_malloc(scatnames, osl_scatnames_p, sizeof(osl_scatnames_t));
+    scatnames->names = NULL;
 
-  return scatnames;
+    return scatnames;
 }
 
 
@@ -205,10 +205,10 @@ osl_scatnames_p osl_scatnames_malloc(void) {
  * \param[in,out] scatnames The pointer to the scatnames structure to free.
  */
 void osl_scatnames_free(osl_scatnames_p scatnames) {
-  if (scatnames != NULL) {
-    osl_strings_free(scatnames->names);
-    free(scatnames);
-  }
+    if (scatnames != NULL) {
+        osl_strings_free(scatnames->names);
+        free(scatnames);
+    }
 }
 
 
@@ -225,15 +225,15 @@ void osl_scatnames_free(osl_scatnames_p scatnames) {
  * \return A pointer to the clone of the scatnames structure.
  */
 osl_scatnames_p osl_scatnames_clone(osl_scatnames_p scatnames) {
-  osl_scatnames_p clone;
+    osl_scatnames_p clone;
 
-  if (scatnames == NULL)
-    return NULL;
+    if (scatnames == NULL)
+        return NULL;
 
-  clone = osl_scatnames_malloc();
-  clone->names = osl_strings_clone(scatnames->names);
+    clone = osl_scatnames_malloc();
+    clone->names = osl_strings_clone(scatnames->names);
 
-  return clone;
+    return clone;
 }
 
 
@@ -246,17 +246,17 @@ osl_scatnames_p osl_scatnames_clone(osl_scatnames_p scatnames) {
  * \return 1 if s1 and s2 are the same (content-wise), 0 otherwise.
  */
 int osl_scatnames_equal(osl_scatnames_p s1, osl_scatnames_p s2) {
-  
-  if (s1 == s2)
+
+    if (s1 == s2)
+        return 1;
+
+    if (((s1 == NULL) && (s2 != NULL)) || ((s1 != NULL) && (s2 == NULL)))
+        return 0;
+
+    if (!osl_strings_equal(s1->names, s2->names))
+        return 0;
+
     return 1;
-
-  if (((s1 == NULL) && (s2 != NULL)) || ((s1 != NULL) && (s2 == NULL)))
-    return 0;
-
-  if (!osl_strings_equal(s1->names, s2->names))
-    return 0;
-
-  return 1;
 }
 
 
@@ -267,16 +267,16 @@ int osl_scatnames_equal(osl_scatnames_p s1, osl_scatnames_p s2) {
  * \return An interface structure for the scatnames extension.
  */
 osl_interface_p osl_scatnames_interface(void) {
-  osl_interface_p interface = osl_interface_malloc();
-  
-  OSL_strdup(interface->URI, OSL_URI_SCATNAMES);
-  interface->idump  = (osl_idump_f)osl_scatnames_idump;
-  interface->sprint = (osl_sprint_f)osl_scatnames_sprint;
-  interface->sread  = (osl_sread_f)osl_scatnames_sread;
-  interface->malloc = (osl_malloc_f)osl_scatnames_malloc;
-  interface->free   = (osl_free_f)osl_scatnames_free;
-  interface->clone  = (osl_clone_f)osl_scatnames_clone;
-  interface->equal  = (osl_equal_f)osl_scatnames_equal;
+    osl_interface_p interface = osl_interface_malloc();
 
-  return interface;
+    OSL_strdup(interface->URI, OSL_URI_SCATNAMES);
+    interface->idump  = (osl_idump_f)osl_scatnames_idump;
+    interface->sprint = (osl_sprint_f)osl_scatnames_sprint;
+    interface->sread  = (osl_sread_f)osl_scatnames_sread;
+    interface->malloc = (osl_malloc_f)osl_scatnames_malloc;
+    interface->free   = (osl_free_f)osl_scatnames_free;
+    interface->clone  = (osl_clone_f)osl_scatnames_clone;
+    interface->equal  = (osl_equal_f)osl_scatnames_equal;
+
+    return interface;
 }
